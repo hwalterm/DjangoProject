@@ -1,0 +1,32 @@
+{% extends "ProblemPages/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if user.is_authenticated %}
+<form method = "POST">
+ <div class="form-group">
+     {% csrf_token %}
+   <fieldset class ="form-group">
+           {{ form|crispy }}
+   </fieldset>
+           <button class ="btn btn-outline-info" type ="submit">Create</button>
+ </div>
+</form>
+{% endif %}
+{% endblock content %}

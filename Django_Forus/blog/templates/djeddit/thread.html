@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load djeddit_tags %}
+
+    <div class="row">
+                <div class="bs-callout">
+                    <div class="bs-callout-heading">
+                        <h3>
+                            {% if thread.url %}
+                                <a href="{{ thread.url }}">{{ thread.title }}</a>
+                            {% else %}
+                                {{ thread.title }}
+                            {% endif %}
+                        </h3>
+
+                    </div>
+                    {% with post as node %}
+                        {% include 'djeddit/post_item.html' with post=node %}
+                    {% endwith %}
+                </div>
+        <div id="comments-callout" class="bs-callout">
+            <h4 class="callout-title">{% getAmount nodes|length 'comment' %}</h4>
+            {% include 'djeddit/thread_recursetree.html' %}
+
+        </div>
+    </div>
+
+    <script src="{% static 'djeddit/js/util.js' %}"></script>
+    <script src="{% static 'djeddit/js/thread.js' %}"></script>
+    <script type="text/javascript">
+
+</script>
+

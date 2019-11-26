@@ -1,0 +1,48 @@
+{% extends "blog/base.html" %}
+
+{% load mptt_tags %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>TESTERTEEST</h1>
+
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{post.author.profile.image.url}}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <span class="d-flex flex-row-reverse">
+                <small class="text-muted text-right">{{ post.date_posted|date:"F d Y" }}</small>
+
+            </span>
+
+            <a class="badge badge-secondary" href="#">{{ post.author }}</a>
+            <a class="text-right" href="{% url 'problem-page' post.page.id %}">{{ post.page.name }}</a>
+
+
+        </div>
+        <h2><a class="article-title">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+    </div>
+</article>
+
+<div>
+  {{ object.body|linebreaks }}
+</div>
+
+
+    <!--<div class="col-md-8">-->
+        <!--<ul class="list-group">-->
+            <!--{% for thread in threads %}-->
+                <!--{% include 'djeddit/thread_item.html' %}-->
+            <!--{% endfor %}-->
+        <!--</ul>-->
+    <!--</div>-->
+
+
+{% include 'djeddit/thread.html' %}
+
+
+{% endblock %}
+
+
+<!--comments-->
+

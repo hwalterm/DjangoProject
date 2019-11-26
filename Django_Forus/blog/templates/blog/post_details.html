@@ -1,0 +1,71 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load mptt_tags %}
+{% load crispy_forms_tags %}
+
+<h1>TESTERTEEST</h1>
+
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{post.author.profile.image.url}}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <span class="d-flex flex-row-reverse">
+                <small class="text-muted text-right">{{ post.date_posted|date:"F d Y" }}</small>
+
+            </span>
+
+            <a class="badge badge-secondary" href="#">{{ post.author }}</a>
+            <a class="text-right" href="{% url 'problem-page' post.page.id %}">{{ post.page.name }}</a>
+
+
+        </div>
+        <h2><a class="article-title">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+    </div>
+</article>
+{% load comments %}
+{% load comments_xtd %}
+
+
+<div>
+  {{ object.body|linebreaks }}
+</div>
+
+{% get_comment_count for object as comment_count %}
+<div class="py-4 text-center>
+  &nbsp;&sdot;&nbsp;
+  {{ comment_count }} comment{{ comment_count|pluralize }}
+  ha{{ comment_count|pluralize:"s,ve"}} been posted.
+</div>
+
+
+{% get_comment_form for object as form %}
+<table>
+  <form action="{% comment_form_target %}" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <tr>
+      <td colspan="2">
+          <input type="hidden" name="next" value="{% url 'post-detail' object.id%}" />
+        <input type="submit" name="submit" value="Post">
+        <input type="submit" name="preview" value="Preview">
+      </td>
+    </tr>
+  </form>
+</table>
+
+
+{% if comment_count %}
+<ul class="media-list">
+  {% render_xtdcomment_tree for object %}
+</ul>
+{% endif %}
+
+
+
+
+{% endblock %}
+
+
+<!--comments-->
+
